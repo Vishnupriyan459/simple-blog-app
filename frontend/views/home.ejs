@@ -1,0 +1,149 @@
+<%- include('header.ejs') %>
+<link rel="stylesheet" href="css/home.css">
+
+<main>
+    <div class="grid-container">
+        <% dataFromDB.forEach((item, index) => { %>
+            <div class="<%= index === 0 ? 'grid-item full-width' : 'grid-item' %>">
+                <form class="content_page" id="<%= 'form' + index %>">
+                    <p class="title"><%= item.title %></p>
+                    <input type="submit" value="Read more" class="Read-btn">
+                </form>
+                <hr>
+                <p>Posted on <%= Dateassem(item.createdAt) %></p>
+            </div>
+        <% }); %>
+    </div>
+    
+    
+<%
+    function Dateassem(timestamp) {
+        const now = new Date();
+        const Date_content = timestamp;
+
+        if (timestamp.getDate() === now.getDate() && timestamp.getMonth() === now.getMonth() && timestamp.getFullYear() === now.getFullYear()) {
+            if (Date_content.getHours() === now.getHours()) {
+                if (Date_content.getMinutes() === now.getMinutes()) {
+                    if (Date_content.getSeconds() === now.getSeconds()) {
+                        return 'NOW';
+                    }
+                    return `${now.getSeconds() - Date_content.getSeconds()} sec ago`;
+                }
+                return `${now.getMinutes() - Date_content.getMinutes()} min ago`;
+            } else {
+                return `${now.getHours() - Date_content.getHours()} hours ago`;
+            }
+        } else {
+            const formattedDate = `${Date_content.getDate()}/${Date_content.getMonth() + 1}/${Date_content.getFullYear()} at ${hour_formate(Date_content.getHours())}:${min_formate(Date_content.getMinutes())}:${Date_content.getSeconds()} ${amp(Date_content.getHours())}`;
+            return formattedDate;
+        }
+    }
+%>
+<%
+    function hour_formate(data){
+        let hours = data;
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        let strTime= `${hours}`
+        return strTime;
+    }
+    function min_formate(data){
+        let minutes = data;
+        
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        return minutes
+    }
+    function amp(data){
+        let ampm = data >= 12 ? 'pm' : 'am';
+        return ampm
+    }
+%>
+
+
+</main>
+
+<script >
+     
+     const contentPages = document.querySelectorAll('.content_page');
+
+    
+    contentPages.forEach((contentPage, index) => {
+    contentPage.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get the title from the associated .title element
+        const titleElement = contentPage.querySelector('.title');
+        const title = titleElement.textContent;
+
+        // Your submit event handling logic here
+        console.log(`Form submitted in content_page with title: ${title}`);
+
+        // Now, you can use fetch to send the title to the backend
+        fetch('/read', {
+            method: 'POST', // or 'GET' depending on your server setup
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            container(data)
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+//container
+const obj=[
+            {
+                author: "Ut cupidatat tempora",
+                body: "Voluptas eligendi ex",
+                createdAt:"2024-01-15T13:32:25.332Z",
+                title:"Consequat Elit fac",
+                __v:0,
+                _id:"65a533e93d0b0ae2ae12dce2"
+            }
+        ]
+   
+    function container(data){
+        //initialization
+        const main=document.querySelector('main');
+        const div=document.createElement('div');
+        div.className='div_content'
+        const close=document.createElement('p')
+        close.className='close'
+
+        const title=document.createElement('h1')
+        title.className='div_title'
+        const para=document.createElement('p')
+        para.className='div_para'
+        const author=document.createElement('p')
+        author.className='div_author'
+        
+        
+        close.textContent='X'
+        title.textContent=data[0].title
+        para.textContent=data[0].body
+        author.textContent=data[0].author
+        
+        div.style.display="block"
+        //container
+        div.append(close,title,para,author);
+        main.append(div)
+        close.addEventListener('click',()=>{
+            div.style.display="none"
+            
+        })
+
+        
+
+    
+
+    }
+    
+</script>
+<script src="js/home.js"></script>
+
+<%- include('footer.ejs')%>

@@ -1,0 +1,56 @@
+<%- include('header.ejs') %>
+<link rel="stylesheet" href="/css/newsletter.css">
+<main>
+    <section class="header_newsletter">
+        <div class="head_newsletter">NewsLetter</div>
+        
+    </section>
+    <section class="body_newsletter">
+            <div>
+                <img src="/img/newsletter.jpg" alt="" class="img_newsletter">
+            </div>
+            <div class="content">
+                <div>We reach you to connect the world<i class="fa-solid fa-rocket"></i>.</div>
+                <div>
+                    <form  id="email_form">
+                        <input type="email" class="newsletter_input" name="email" required>
+                        <input type="submit" class="newsletter_submit">
+                    </form>
+                
+                </div>
+            </div>
+            
+        
+    </section>
+</main>
+<script>
+    const data=document.querySelector(".newsletter_input");
+    const submit_btn=document.querySelector("#email_form");
+    submit_btn.addEventListener('submit',()=>{
+        
+        event.preventDefault();
+        senddata={
+            email:data.value
+        }
+        const options={
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(senddata)
+        }
+        fetch('/email_submit',options).then(Response=>Response.json()).then(data=>{
+            if(data.message){
+                window.location.href="/"
+
+            }
+            else if(data.error){
+                alert("you already Registered")
+            }
+            
+        })
+        console.log(data.value)
+    })
+    // console.log(data)
+    
+</script>

@@ -1,0 +1,29 @@
+.head_about{
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'poppins';
+    font-weight: 200;
+    
+}
+main{
+    width: 100vw;
+    margin: 20vh 0vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 1vh;
+   
+    
+}
+/* about */
+.header_about{
+    align-content: center;
+    justify-content: center;
+}
+.body_about{
+    font-size: 1.8rem;
+    padding: 1rem;
+
+}
+

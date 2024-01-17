@@ -1,0 +1,49 @@
+body{
+    background-color: #000;
+}
+form{
+    margin: 15vh 10%;
+    background-color: rgba(219, 219, 219, 0.1);
+    color: #fff; 
+    padding: 2.5rem 3rem;
+    width: 80%; 
+    height: 80%; 
+    border-radius: 10px;
+}
+.input_block input,textarea{
+    font-size: 2rem;
+    font-weight: 100;
+    font-weight: lighter;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.808);
+    
+    
+}
+.input_block{
+    display: flex;
+    flex-direction: column;
+}
+textarea{
+    resize:vertical;
+    font-style: light;
+    height: auto;
+}
+label{
+    font-size: 2rem;
+    /* font-weight: 500; */
+}
+.submit{
+    padding: 0.8rem 1rem;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.808);
+    color: #000000;
+    border-radius: 10px;
+}
+.submit:hover,.input_block input:hover,textarea:hover {
+    background-color: rgba(219, 219, 219, 0);
+    color: rgb(255, 255, 255);
+    border: 1px solid #FFF;
+}

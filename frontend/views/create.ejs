@@ -1,0 +1,56 @@
+<%- include('header.ejs') %>
+<link rel="stylesheet" href="/css/create.css">
+<main>
+    <form  id="Create_post">
+        <div class="input_block">
+            <label for="Tiltle">Title:</label>
+            <input type="text" id="Tiltle" name="Title" >
+            <label for="body">Body:</label>
+            <textarea name="body" id="body" ></textarea>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" >
+        </div>
+        
+        <input type="submit" class="submit">
+
+
+    </form>
+</main>
+<script>
+    const form_content=document.querySelector("#Create_post")
+    const form_submit=document.querySelector(".submit")
+    
+    form_submit.addEventListener('click',()=>{
+        event.preventDefault()
+        
+        postdata={
+            title:form_content.elements['Title'].value,
+            body:form_content.elements['body'].value,
+            author:form_content.elements['author'].value
+        }
+        console.log(JSON.stringify(postdata));
+        
+        option={
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(postdata)
+        }
+        
+        
+        fetch('/create_post',option)
+        .then(Response=>Response.json()).then(data=>{
+            console.log(data.message)
+            if(data.message){
+                window.location.href="/"
+
+            }
+            else if(data.code==11000){
+                alert("This Title already taken")
+            }
+        })
+    })
+
+
+</script>

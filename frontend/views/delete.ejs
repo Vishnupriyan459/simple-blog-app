@@ -1,0 +1,31 @@
+<%- include('header.ejs') %>
+<link rel="stylesheet" href="css/home.css">
+
+<main>
+    <div class="grid-container">
+        <% dataFromDB.forEach((item, index) => { %>
+            <div class="<%= index === 0 ? 'grid-item full-width' : 'grid-item' %>">
+                <form class="content_page" id="<%= 'form' + index %>">
+                    <p class="title"><%= item.title %></p>
+                    <input type="submit" value="Read more" class="Read-btn">
+                </form>
+                <hr>
+                <p>Posted <%= item.createdAt %></p>
+                
+            </div>
+        <% }); %>
+    </div>
+    
+    
+
+
+</main>
+<script>
+    const hi=()=>{
+        console.log('hi')
+    }
+    
+</script>
+<!-- <script src="/js/home.js"></script> -->
+
+<%- include('footer.ejs')%>
